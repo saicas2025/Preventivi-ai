@@ -1,33 +1,78 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <title>Preventivo AI</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Preventivo AI + Chat</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- pdf.js per testo da PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
 </head>
 <body>
-  <h1>Preventivo AI</h1>
+  <header><h1>Preventivo AI + Chat</h1></header>
 
-  <div id="upload">
-    <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg" />
-    <button onclick="readFile()">📖 Leggi PDF/Immagine</button>
-  </div>
+  <nav class="tabs">
+    <button data-tab="quote" class="active">Preventivo</button>
+    <button data-tab="chat">Chat</button>
+    <button data-tab="test">Test</button>
+  </nav>
 
-  <div id="controls">
-    <label>€/kg: <input id="prezzoKg" type="number" value="1.8"></label>
-    <label>€/h: <input id="prezzoOra" type="number" value="42"></label>
-    <label>€/m²: <input id="prezzoVerniciatura" type="number" value="15"></label>
-    <button onclick="calcola()">🧮 Calcola Preventivo</button>
-  </div>
+  <main>
+    <!-- Preventivo -->
+    <section id="tab-quote" class="tab active">
+      <div class="panel">
+        <h2>Input</h2>
+        <label>PDF tecnico (opzionale)
+          <input id="pdfInput" type="file" accept="application/pdf" />
+        </label>
+        <label class="full">Oppure incolla testo tecnico
+          <textarea id="rawText" rows="8" placeholder="Specifiche, misure, materiali, quantità…"></textarea>
+        </label>
+        <div class="grid">
+          <label>€/kg materiale <input id="eurKg" type="number" step="0.01" value="1.8"></label>
+          <label>€/h manodopera <input id="eurH" type="number" step="0.01" value="42"></label>
+          <label>€/m² verniciatura <input id="eurMq" type="number" step="0.01" value="15"></label>
+        </div>
+        <div class="actions">
+          <button id="extractBtn">📖 Leggi PDF</button>
+          <button id="quoteBtn" class="primary">🧮 Calcola</button>
+        </div>
+        <p id="status" class="status"></p>
+      </div>
+      <div class="panel">
+        <h2>Risultato</h2>
+        <textarea id="result" class="mono" rows="16" placeholder="Il preventivo apparirà qui…"></textarea>
+      </div>
+    </section>
 
-  <div id="risultato"></div>
+    <!-- Chat -->
+    <section id="tab-chat" class="tab">
+      <div class="panel">
+        <h2>Chat</h2>
+        <div id="chatBox" class="chatbox"></div>
+        <div class="row">
+          <input id="chatInput" placeholder="Scrivi un messaggio…" />
+          <button id="sendBtn" class="primary">Invia</button>
+        </div>
+        <p id="chatStatus" class="status"></p>
+      </div>
+    </section>
 
-  <h2>Chat libera</h2>
-  <div id="chat">
-    <textarea id="chatInput" placeholder="Scrivi un messaggio..."></textarea>
-    <button onclick="mandaMessaggio()">Invia</button>
-    <div id="chatOutput"></div>
-  </div>
+    <!-- Test -->
+    <section id="tab-test" class="tab">
+      <div class="panel">
+        <h2>Test backend</h2>
+        <div class="row">
+          <button id="pingBtn">🔎 /health</button>
+          <button id="diagBtn">🧪 /diag</button>
+        </div>
+        <pre id="testOut" class="mono" style="min-height:120px;margin-top:10px"></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer><small>© WebApp • GitHub Pages + backend esterno</small></footer>
 
   <script src="config.js"></script>
   <script src="app.js"></script>
