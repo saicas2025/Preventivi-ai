@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Preventivo AI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Preventivo AI</h1>
+
+  <div id="upload">
+    <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg" />
+    <button onclick="readFile()">📖 Leggi PDF/Immagine</button>
+  </div>
+
+  <div id="controls">
+    <label>€/kg: <input id="prezzoKg" type="number" value="1.8"></label>
+    <label>€/h: <input id="prezzoOra" type="number" value="42"></label>
+    <label>€/m²: <input id="prezzoVerniciatura" type="number" value="15"></label>
+    <button onclick="calcola()">🧮 Calcola Preventivo</button>
+  </div>
+
+  <div id="risultato"></div>
+
+  <h2>Chat libera</h2>
+  <div id="chat">
+    <textarea id="chatInput" placeholder="Scrivi un messaggio..."></textarea>
+    <button onclick="mandaMessaggio()">Invia</button>
+    <div id="chatOutput"></div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
